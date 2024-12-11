@@ -1,4 +1,4 @@
-import { Module, } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
 
 import { ConfigModule } from '@nestjs/config';
@@ -6,7 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
-import * as Joi from "joi"
+import * as Joi from 'joi';
 
 import { JwtModule } from './jwt/jwt.module';
 
@@ -24,18 +24,17 @@ import { Artist } from './artists/entities/artist.entity';
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: process.env.NODE_ENV === "dev" ? ".env.dev" : ".env.test",
-      ignoreEnvFile: process.env.NODE_ENV === "prod",
+      envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.test',
+      ignoreEnvFile: process.env.NODE_ENV === 'prod',
       validationSchema: Joi.object({
-        NODE_ENV: Joi.string().valid("dev", "test", "production").required(),
+        NODE_ENV: Joi.string().valid('dev', 'test', 'production').required(),
         DB_HOST: Joi.string().required(),
         DB_PORT: Joi.string().required(),
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
         DB_NAME: Joi.string().required(),
-        PRIVATE_KEY: Joi.string().required()
-      })
-
+        PRIVATE_KEY: Joi.string().required(),
+      }),
     }),
 
     TypeOrmModule.forRoot({
@@ -47,21 +46,16 @@ import { Artist } from './artists/entities/artist.entity';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
 
-
       synchronize: process.env.NODE_ENV !== 'prod',
-      logging: process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== "test",
-      entities: [
-        User,
-        Codart,
-        Artist,
-      ],
+      logging:
+        process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
+      entities: [User, Codart, Artist],
       // ssl: true,
       // extra: {
       //   ssl: {
       //     rejectUnauthorized: false,
       //   },
       // },
-
     }),
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -79,7 +73,7 @@ import { Artist } from './artists/entities/artist.entity';
     UsersModule,
     CommonModule,
     JwtModule.forRoot({
-      privateKey: process.env.PRIVATE_KEY
+      privateKey: process.env.PRIVATE_KEY,
     }),
     CodartsModule,
     ArtistsModule,
@@ -87,4 +81,4 @@ import { Artist } from './artists/entities/artist.entity';
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}
