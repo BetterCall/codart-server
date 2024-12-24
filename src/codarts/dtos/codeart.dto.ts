@@ -4,12 +4,12 @@ import { Codart } from '../entities/codart.entity';
 
 @ArgsType()
 export class CodartArgs {
-    @Field((type) => String)
-    code: string;
+  @Field((type) => String)
+  code: string;
 }
 
 @ObjectType()
 export class CodartOutput extends CoreOutput {
-    @Field(type => Codart, { nullable: true })
-    result?: Codart
+  @Field((type) => Codart, { nullable: true })
+  result?: Codart;
 }
